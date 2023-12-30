@@ -10,32 +10,35 @@
 
 <body>
     <h1>Rock Paper Scissors</h1>
+    <div class="playButtons">
+        <button class="playButton" id="rock">
+            <img src="./IMAGES/rock-emoji.png" alt="rock-emoji">
+        </button>
 
-    <button class="playButton" id="rock" onclick="playgame('rock')">
-        <img src="./IMAGES/rock-emoji.png" alt="rock-emoji">
-    </button>
+        <button class="playButton" id="paper">
+            <img src="./IMAGES/paper-emoji.png" alt="paper-emoji">
+        </button>
 
-    <button class="playButton" id="paper" onclick="playgame('paper')">
-        <img src="./IMAGES/paper-emoji.png" alt="paper-emoji">
-    </button>
+        <button class="playButton" id="scissors">
+            <img src="./IMAGES/scissors-emoji.png" alt="scissors-emoji">
+        </button>
+    </div>
+    <p id="resultParagraph">No scores yet...</p>
+    <div class="moves">
+        <div class="move">
+            <img id="you_img" src="./IMAGES/you_start.png" alt="">
+            <p>You</p>
+        </div>
+        <div class="move">
+            <img id="computer_img" src="./IMAGES/computer_start.png" alt="">
+            <p>Computer</p>
+        </div>
+    </div>
 
-    <button class="playButton" id="scissors" onclick="playgame('scissors')">
-        <img src="./IMAGES/scissors-emoji.png" alt="scissors-emoji">
-    </button>
-
-    <p class="scoreParagraph">No scores yet...</p>
-
-    <p class="moves_paragraph">
-        You
-        <img src="./IMAGES/you_start.png" alt="">
-        <img src="./IMAGES/computer_start.png" alt="">
-        Computer
-    </p>
-
-    <p class="final_scores"></p>
-
-    <button class="reset_score" onclick="resetScore()">Reset Score</button>
+    <p id="final_scores"></p>
+<div class="reset">
+    <button id="reset_scores">Reset Scores</button>
+</div>
     <script src="./JS/script.js"></script>
 </body>
-
 </html>

@@ -1,8 +1,23 @@
+// HTML elements
+const playRock = document.querySelector('#rock');
+const playPaper = document.querySelector('#paper');
+const playScissors = document.querySelector('#scissors');
+const resultParagraph = document.querySelector('#resultParagraph');
+const scoresParagraph = document.querySelector('#final_scores');
+const resetButton = document.querySelector('#reset_scores');
+
 let scores = JSON.parse(localStorage.getItem('total_scores')) || {wins : 0, loses : 0, ties : 0}
-
-
 updateScore();
-function playgame(playerMove) {
+colorScores();
+
+
+// Calling functions
+playRock.addEventListener("click", () => playGame('rock'));
+playPaper.addEventListener("click", () => playGame('paper'));
+playScissors.addEventListener("click", () => playGame('scissors'));
+resetButton.addEventListener("click", () => resetScores());
+
+function playGame(playerMove) {
     let compMove = pickComputerMove()
     let result;
     if (playerMove === compMove) {
@@ -34,9 +49,10 @@ function playgame(playerMove) {
         }
     }
     localStorage.setItem('total_scores', JSON.stringify(scores));
-    document.querySelector('.scoreParagraph').innerHTML = result;
-    
-    document.querySelector('.moves_paragraph'). innerHTML = `You <img src="../IMAGES/${playerMove}-emoji.png" alt="${playerMove}"> <img src="../IMAGES/${compMove}-emoji.png" alt="${compMove}"> Computer`;
+    resultParagraph.innerHTML = result;
+    document.querySelector("#you_img").src = `./IMAGES/${playerMove}-emoji.png`;
+    document.querySelector("#computer_img").src = `./IMAGES/${compMove}-emoji.png`;
+    colorResult(result)
     updateScore();
     colorScores();
 }
@@ -56,26 +72,43 @@ function pickComputerMove() {
 }
 
 function updateScore(){
-    document.querySelector('.final_scores').innerHTML = `Wins: ${scores.wins}, Loses: ${scores.loses}, Ties: ${scores.ties}`
+    scoresParagraph.innerHTML = `Wins: ${scores.wins}, Loses: ${scores.loses}, Ties: ${scores.ties}`
 }
 
-function resetScore() {
+function resetScores() {
     scores.wins = 0;
     scores.loses = 0;
     scores.ties = 0;
     localStorage.clear();
-    document.querySelector('.scoreParagraph').innerHTML = `No scores yet...`
-    document.querySelector('.moves_paragraph').innerHTML = ` You <img src="../IMAGES/you_start.png" alt=""> <img src="../IMAGES/computer_start.png" alt=""> Computer`
+    resultParagraph.innerHTML = `No scores yet...`;
+    document.querySelector('#computer_img').src = "./IMAGES/computer_start.png";
+    document.querySelector('#you_img').src = "./IMAGES/you_start.png";
     updateScore();
-    colorScores();
+    resultParagraph.style.color = "white"
+    scoresParagraph.style.color = "white";
 }
 
 function colorScores(){
+    if (scores.wins === 0 && scores.loses === 0 && scores.ties === 0) {
+        return;
+    }
+
     if (scores.wins > scores.loses){
-        document.querySelector('.final_scores').style.color = "green";
+        scoresParagraph.style.color = "green";
     } else if (scores.loses > scores.wins) {
-        document.querySelector('.final_scores').style.color = "red";
-    } else if (scores.wins == scores.loses){
-        document.querySelector('.final_scores').style.color = "yellow";
+        scoresParagraph.style.color = "red";
+    } else {
+        scoresParagraph.style.color = "yellow";
     }
 }
+
+function colorResult(result) {
+    if (result === "You Win") {
+        resultParagraph.style.color = "green";
+    } else if (result === "You Lose") {
+        resultParagraph.style.color = "red";
+    } else if (result === "Tie Game") {
+        resultParagraph.style.color = "yellow";
+    }
+}
+
